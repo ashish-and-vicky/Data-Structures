@@ -1,0 +1,152 @@
+# include <iostream>
+using namespace std;
+int simpHash(int i, int N)
+    {
+        return (i%N);    
+    }
+
+int removDig(int i)
+    {
+        int k = i%10;
+        i = i-k;
+        i = i/10;
+        return i;
+    }
+int checkNoDig(int i)
+    {
+        int cnt =0;
+        while(i>0)
+            {
+                i = i/10;
+                cnt++;
+            }
+            return cnt;
+    }
+
+int checkEven(int i)
+    {
+        int k = i%2;
+        if(k==0)
+            return 1;
+        else 
+            return 0;
+    }
+
+int main() //yashu
+    {
+       
+        int hashTableSize;
+        cin>>hashTableSize;
+        int hashTbl[hashTableSize];
+        for(int k = 0; k<hashTableSize; k++)
+            {
+                hashTbl[k] = -1;
+            }
+        int cmd =-2;
+        int valcount = 0;
+        while(cmd != -1)
+            {
+                valcount++;
+                if(valcount > hashTableSize)
+                    break;
+                
+                cin>>cmd;
+                if(cmd ==-1)
+                    break;
+                else
+                    {
+                        int flag =0;
+                        int i = cmd;
+                        int j = simpHash(i, hashTableSize);
+                         int lastDigitStatus = 0;
+                      //  cout<<j<<endl;
+                        while(hashTbl[j] != -1)
+                            {
+                               
+                                cout<<j<<" ";
+                                int checkEv = checkEven(i);
+                                //cout<< checkNoDig(i)<<"YES";
+                                if(checkNoDig(i)>0)
+                                    {
+                                     // cout<<"p";
+                                      //  cout<<j<<"2"<<endl;
+                                        
+                                       // cout<<checkEv<<endl;;
+                                        i = removDig(i);
+                                        //cout<<i<<endl;
+                                        int steps = simpHash(i, hashTableSize);
+                                        //cout<<steps<<endl;
+                                        if(checkEv == 1)
+                                            {
+                                             // cout<<"q";
+                                              // cout<<"yes"<<endl;
+                                              // cout<<j<<endl;
+                                               j = j-steps;
+                                              // cout<<j<<endl;
+                                                lastDigitStatus = -1;
+                                                if(j<0)
+                                                    j = hashTableSize + j;
+                                                continue;
+                                                  //cout<<j<<endl;  
+                                            }
+                                        else if(checkEv == 0)
+                                            {
+                                                j = j + steps;
+                                                lastDigitStatus = -2;
+                                                if(j>(hashTableSize - 1))
+                                                    j = j - hashTableSize;
+                                                continue;
+                                            }
+                                    }
+                                else if(checkNoDig(i) < 1)
+                                    {
+                                       //cout<<"lol";
+                                       // cout<<"kim"<<lastDigitStatus<<"pimpom";
+                                        if(lastDigitStatus == -1)
+                                            {
+                                               // cout<<"lol";
+                                                j = j - 1; 
+                                                if(j<0)
+                                                    j = hashTableSize + j;
+                                                continue;
+                                            }
+                                        else if(lastDigitStatus == -2)
+                                            {
+                                                
+                                                j = j + 1;
+                                                if(j>(hashTableSize - 1))
+                                                    j = j - hashTableSize;
+                                                continue;
+                                            }
+                                        else
+                                            {
+                                                if(checkEv == 1)
+                                                   {
+                                                       j = j - 1; 
+                                                        if(j<0)
+                                                            j = hashTableSize + j;
+                                                        continue;
+                                                   }
+                                                 else if(checkEv == 0)
+                                                    {
+                                                        j = j + 1;
+                                                        if(j>(hashTableSize - 1))
+                                                            j = j - hashTableSize;
+                                                        continue;
+                                                        
+                                                    }
+                                            }
+                                    }
+                            
+                                cout<<j<<" ";
+                                flag = 1;
+                            }
+                            
+                        if(flag != 1)    
+                            cout<<j;    
+                        hashTbl[j] = cmd;
+                        cout<<endl;
+                    }
+            }
+        return 0;
+    }

@@ -1,0 +1,154 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+class Node
+{
+    int data;
+    Node* left;
+    Node* right;
+    friend class Btree;
+};
+class Btree
+{
+    Node* root;
+    
+    public:
+    int count;
+    Btree()
+    {
+        count = 0;
+        root = NULL;
+    }
+    Node* getroot()
+    {
+        return root;
+    }
+    
+    void insert(int data)
+    {
+        Node* newnode = new Node;
+        newnode->data = data;
+        newnode->left = NULL;
+        newnode->right = NULL;
+        if(root == NULL)
+            root = newnode;
+        else
+        {
+            Node *curr,*prev;
+            curr = prev = root;
+            while(curr != NULL)
+            {
+                prev = curr;
+                if( data > curr->data )
+                    {
+                        curr = curr->right;
+                    }
+                else 
+                    {
+                        curr = curr->left;
+                    }
+            }
+            if( data > prev->data )
+            {
+                prev->right = newnode;
+                Node* temp = bf(getroot());
+                if(temp == NULL)
+                {
+                    
+                }
+                else
+                {
+                    count++;
+                    cout << data << " ";
+                    prev->right = NULL;
+                }
+            }    
+                
+            else
+            {
+                prev->left = newnode;
+                Node* temp = bf(getroot());
+                if( temp == NULL )
+                {
+                    
+                }
+                else
+                {
+                    count++;
+                    cout << data << " ";
+                    prev->left = NULL;
+                }
+            }    
+        }
+    }
+
+
+    int height(Node* temp)
+    {
+        if (temp == NULL)
+            return 0;
+        return  max( height(temp->left) , height(temp->right) ) + 1 ;    
+    }
+    
+    Node* bf(Node *temp)
+    {
+        if( temp != NULL )
+        {
+            int b = abs( height(temp->left) - height(temp->right) );
+            if( b > 1 )
+                return temp;
+                
+            Node* temp1 = bf(temp->left);
+            if( temp1 != NULL )
+                return temp1;
+                
+            temp1 = bf(temp->right);
+            if( temp1 != NULL )
+                return temp1;
+        }
+        return NULL;
+    }
+    
+    void counter()
+    {
+       // if (count == 0)
+         //   cout << "'0'" << endl;
+        //else
+            cout << count ;
+    }
+    
+    void inorder(Node* temp)
+    {
+        if(temp == NULL)
+            return ;
+        inorder(temp->left);
+        cout << temp->data << " ";
+        inorder(temp->right);
+    }
+    
+};
+int main()
+{
+    Btree B1;
+    
+    int i ;
+    
+   while(1)
+    {
+        cin >> i;
+        if(i == -1)
+            break;
+        else
+            B1.insert(i);
+            
+    }
+    
+    B1.counter();
+    
+  //  cout << endl;
+    ///B1.inorder(B1.getroot());    
+//        cout << d1<<" "  << " "<< dp   << endl;
+      
+
+    return 0;
+}

@@ -1,0 +1,163 @@
+#include<iostream>
+using namespace std;
+
+class Node{
+	public:
+	int data;
+	Node *next;
+	
+	Node()
+    {
+        next=NULL;
+    }
+
+    Node(int data)
+    {
+        this->data=data;
+        this->next=NULL;
+    }
+
+    ~Node()
+    {
+        next=NULL;
+    }
+            
+    int getdata()
+    {
+        return data;
+    }
+
+    void setnext(Node *next)
+    {
+        this->next=next;
+    }
+
+    Node *getnext()
+    {
+        return next;
+    }
+};
+
+class Linklist{
+    Node *head;
+    	
+    private:
+   	Linklist()
+	{
+		head=NULL;
+	}
+	
+
+	void addB(int data)
+    {
+        Node *node=new Node(data);
+        if(head==NULL)
+        {
+            head=node;
+        }
+        else
+        {
+            node->setNext(head);
+            head=node;
+        }
+    }
+     
+    void addE(int data)
+    {
+        Node *node= new Node(data);
+        Node* temp=head;
+        if(head==NULL)
+        {
+            head=node;
+        }
+        else
+        {
+            Node *temp=head;
+            while(temp->getNext()!=NULL)
+            {
+                temp=temp->getNext();
+            }
+            temp->setNext(node);
+        }
+    }
+    
+    void min(int data)
+    {
+    	if( data<=60 || int data>=40 )
+    	{
+    		cout<<"groceries with min stock are"<<data;
+		}
+    	
+	}
+	
+	void max(int data)
+	{
+		if( data>=60 || data<=100)
+		{
+			cout<<"groceries with max stock are"<<data;
+		}
+	}
+    
+	void showChoice()
+	{	
+	cout<<"Select one option to perform"<<endl;
+	cout<<"1. Add new grocery to inventory"<<endl;
+	cout<<"2. Remove Grocery from inventory"<<endl;
+	cout<<"3. Grocery with Minimum Stock"<<endl;
+	cout<<"4. Grocery with Maximum Stock"<<endl;
+	}
+};
+
+
+int main()
+{
+	int choice;
+	do
+	{
+		showChoices();
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			cout << "Enter initial stock of Apples: ";
+			cin >> name >> data;
+			cout<< fruit(name, data) <<endl;
+			void min(data);
+			void max(data);
+			break;
+		case 2:
+			cout << "Enter initial stock of Bananas: ";
+			cin >> name >> data;
+			cout << subtract(name, data) <<endl;
+			void min(data);
+			void max(data);
+			break;
+		case 3:
+			cout << "Enter initial stock of Oranges: ";
+			cin >> name >> data;
+			cout << multiply(name,data) <<endl;
+			void min(data);
+			void max(data);
+			break;
+		case 4:
+			cout << "Enter initial stock of WaterMelons: ";
+			cin >> name >> data;
+			cout << divide(name, data) <<endl;
+			void min(data);
+			void max(data);
+			break;
+		case 5:
+			cout << "Enter initial stock of Mangoes: ";
+			cin >> name >> data;
+			cout << divide(name, data) <<endl;
+			void min(data);
+			void max(data);
+			break;
+		default:
+			cout << "Invalid input" << endl;
+		}
+	}while (choice != 5);
+
+	return 0;
+}
+}

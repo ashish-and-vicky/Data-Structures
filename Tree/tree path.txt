@@ -1,0 +1,161 @@
+#include<iostream>
+using namespace std;
+
+class Node
+{
+  int data;
+  Node* left;
+  Node* right;
+  friend class BSTree;
+};
+class BSTree
+{
+    Node* root;
+    
+    public:
+        BSTree()
+        {
+            root = NULL;
+        }
+        Node* getroot()
+        {
+            return root;
+        }
+        void insert(int data)
+        {
+            Node* newnode;
+            newnode = new Node;
+            newnode->data = data;
+            newnode->left = NULL;
+            newnode->right = NULL;
+            
+            if(root == NULL)
+                root = newnode;
+            else
+            {
+                Node *temp1;
+                Node *temp2;
+                temp1 = root;
+                while(temp1 != NULL)
+                {
+                    temp2 = temp1;
+                    if(  data <= temp1->data )
+                        temp1 = temp1->left;
+                    else if(data > temp1->data )
+                        temp1 = temp1->right;
+                    
+                }
+                if(data <= temp2->data )
+                {
+                    temp2->left = newnode;
+                }
+                else if( data > temp2->data )
+                {
+                    temp2->right = newnode;
+                }
+                
+            }    
+        }
+        void inorder(Node* temp)
+        {
+            if( temp == NULL)
+            return;
+            inorder(temp->left);
+            cout << temp->data << " ";
+            inorder(temp->right);
+        }
+
+        int find(int key)
+        {
+            Node* temp;
+            temp = root;
+            if(root == NULL)
+            {
+                return 5;
+            }
+            else if(temp->data == key)
+            {
+                return 1;
+            }
+            else 
+            {
+                while(temp != NULL)
+                {
+                    if( key < temp->data )
+                    {
+                        temp = temp->left;
+                    }
+                    else if( key > temp->data)
+                    {
+                        temp = temp->right;
+                    }
+                    else if(key == temp->data)
+                    {
+                        return 1;
+                    }
+                }
+                if(temp == NULL)
+                {
+                    return -1;
+                }
+            }
+        }
+        void path(int key)
+        {
+            int search;
+            search = find(key);
+            if(search == -1)
+            {
+                cout << "Not Found"<<endl;
+            }
+            
+            else if(search != -1)
+            {
+                Node *temp = root;
+                cout << "Root" <<" ";
+                while(temp != NULL)
+                {
+                    if(key < temp->data)
+                        {
+                            temp = temp->left;
+                            cout << "L"<<" ";
+                        }
+                    else if( key > temp->data)
+                        {
+                            temp = temp->right;
+                            cout << "R"<<" ";
+                        }
+                    else if(key == temp->data)
+                        {
+                            cout<<endl;
+                            break;
+                        }
+                }
+            }
+        }
+        
+    
+};
+int main()
+{
+    BSTree B;
+    int input = 99;
+  
+    while(input != -1)
+    {
+        cin >> input;
+        if(input != -1)
+        B.insert(input);
+    } 
+    
+    cin>>input;
+    while(input)
+    {
+        int key;
+        cin >>key;
+        B.path(key);
+        input--;
+    }
+    
+    return 0;
+}

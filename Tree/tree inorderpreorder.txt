@@ -1,0 +1,114 @@
+#include<iostream>
+using namespace std;
+
+class Node
+{
+    int data;
+    Node *left;
+    Node *right;
+    friend class BST;
+};
+class BST
+{
+    Node *root;
+    int count;  
+    int i,j;
+    int s1,s2;
+    int *arr1, *arr2;
+    public:
+        BST(int s1, int s2)
+        {
+            i = j = 1;
+            count  = 0;
+            root = NULL;
+            arr1 = new int [s1];
+            arr2 = new int [s2];
+        }
+        
+        Node* getroot()
+        {
+            return root;
+        }
+        
+        void insert(int val)
+        {
+            count++;
+            Node* newnode;
+            newnode = new Node;
+            newnode->data = val;
+            newnode->left = NULL;
+            newnode->right = NULL;
+            if(root == NULL)
+                root = newnode;
+            else
+            {
+                Node *temp1,*temp2;
+                temp1 = root;
+                while(temp1 != NULL)
+                {
+                      temp2 = temp1;
+                        if(temp1->data > val)
+                            temp1 = temp1->left;
+                        else
+                            temp1 = temp1->right;
+                }
+                
+                if( temp2->data > val)
+                    temp2->left = newnode;
+                else 
+                    temp2->right = newnode;
+                
+            }
+        }
+        
+        void inorder(Node* temp)
+        {
+            if( temp == NULL) 
+                return ;
+            inorder(temp->left);
+               arr1[i++] = temp->data;
+            inorder(temp->right);
+        }
+        
+        void preorder(Node* temp)
+        {
+            if( temp == NULL) 
+                return ;
+            arr2[j++] = temp->data;
+            preorder(temp->left);
+            preorder(temp->right);
+            
+        }
+        
+        void compare()
+        {   
+            
+            inorder(getroot());
+            preorder(getroot());
+            for(int i = 1 ; i <= count ; i++)
+            {
+                if(arr1[i] == arr2[i])
+                    cout << i << " " << arr1[i] << endl;
+            }
+            
+        }
+};
+
+int main()
+{
+    BST B(50,50);
+    int n;
+    while(1)
+    {
+        cin >> n ;
+        if(n == -1)
+            break;  
+        else
+            B.insert(n);
+    }
+     
+       B.compare();
+    
+    return 0;
+        
+}

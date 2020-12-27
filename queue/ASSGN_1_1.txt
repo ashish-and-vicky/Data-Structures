@@ -1,0 +1,97 @@
+#include<iostream>
+
+using namespace std;
+
+class Queue
+{
+    int rear;
+    int front;
+    int size;
+    int * store;
+
+public:
+    Queue(int size)
+    {
+        front=-1;
+        rear=-1;
+        this->size=size;
+        store=new int[size];
+    }
+    
+    ~Queue()
+    {
+        delete [] store;
+    }
+    
+    int isFull()
+    {
+        if(rear==(size-1))
+            return 1;
+            return 0;
+    }
+    
+    int isEmpty()
+    {
+        if((front==-1 && rear==-1) || (front>rear))
+            return 1;
+            return 0;
+    }
+    
+    void enque(int data)
+    {
+        if(!isFull())
+            {
+                rear++;
+                store[rear]=data;
+                if(front==-1)
+                    front=0;
+            }
+    }
+    
+    void deque()
+    {
+        if(!isEmpty())
+            front++;
+    }
+    
+    int getCompare()
+    {
+        return front==rear;
+    }
+    
+    void print()
+    {
+        cout<<(rear-front)<<" ";
+        do{
+            front++;
+            cout<<store[front]<<" ";
+            } while(front!=rear);
+    }
+    
+    
+};
+
+int main()
+{
+    Queue q1(20);
+    int a;
+    int t=0;
+    int f;
+    cin>>f;
+    while(1)
+    {
+        cin>>a;
+        if(a==-1)
+            break;
+        if(a==0 || (a>-1 && a<=f))
+            q1.enque(a);
+        while(t<=a)
+        {
+            if((t+1)%3==0 && t<=f && (!q1.getCompare()))
+                q1.deque();
+                t++;
+        }
+    }
+    q1.print();
+    return 0;
+}

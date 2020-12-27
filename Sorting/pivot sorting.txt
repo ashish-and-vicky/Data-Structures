@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+void sortdata(int a[],int lb,int ub,int n);
+void print(int a[],int n);
+
+int main()
+{
+    int n;
+    cin>>n;
+    int * arr;
+    arr=new int [n];
+    
+    for(int i=0 ; i<n ; i++)
+    {
+        cin>>arr[i];
+    }
+    int lb=0;
+    int ub=n-1;
+    sortdata(arr,lb,ub,n);
+}
+void sortdata(int a[],int lb,int ub,int n)
+{
+    if(lb >= ub)
+    {
+        return ;
+    }
+    int j=lb;   
+    int i=lb+1;
+    
+    int key=(lb+ub)/2;
+    
+    int temp=a[lb];
+    a[lb]=a[key];
+    a[key]=temp;
+    while(i<=ub)
+    {
+        if(a[i] < a[lb] )
+        {
+            j++;
+            int temp=a[j];
+            a[j]=a[i];
+            a[i]=temp;
+        }
+        i++;
+    }
+    temp=a[j];
+    a[j]=a[lb];
+    a[lb]=temp;
+    print(a,n);
+    cout<<endl;
+    sortdata(a,lb,j-1,n);
+    sortdata(a,j+1,ub,n);
+}
+void print(int a[],int n)
+{
+    for(int i=0 ;i<n;i++)
+    {
+        cout<<a[i]<<" ";
+    }
+}

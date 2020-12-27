@@ -1,0 +1,285 @@
+#include
+#include
+using namespace std;
+class Node
+{
+    int data;
+    Node *next;
+
+public:
+        Node()
+            {
+            next=NULL;
+            }
+
+         Node(int data)
+                    {
+                        this->data=data;
+                        this->next=NULL;
+                    }
+
+          ~Node()
+                {
+                next=NULL;
+                }
+            
+            int getdata()
+            {
+                return data;
+            }
+            void setNext(Node *next)
+            {
+                this->next=next;
+            }
+            Node *getNext()
+            {
+                return next;
+            }
+
+};
+
+class LinkList
+{  
+    private:
+    Node *head;
+    
+    public:
+    
+    LinkList()
+    {
+        head=NULL;
+    }
+    
+    
+    void AB(int data)
+    {
+        Node *node=new Node(data);
+        if(head==NULL)
+        {
+            head=node;
+        }
+        else
+        {
+            node->setNext(head);
+            head=node;
+        }
+        
+    }
+     
+    void AE(int data)
+    {
+        Node *node= new Node(data);
+        Node*temp=head;
+        if(head==NULL)
+        {
+            head=node;
+        }
+        else
+        {
+            Node *temp=head;
+            while(temp->getNext()!=NULL)
+            {
+                temp=temp->getNext();
+            }
+            temp->setNext(node);
+        }
+    }
+    
+    
+    void AMA(int after, int tobe)
+    {
+        Node *node=new Node(tobe);
+        Node *temp=head;
+        if(head==NULL){
+            return ;
+        }
+        while(temp!=NULL && temp->getdata()!=after)
+        {
+            temp=temp->getNext();
+           
+        }
+             node->setNext(temp->getNext());
+             temp->setNext(node);
+       /* if(head->getdata()==tobe)
+        {
+            node->setnext(temp->getnext());
+            head->setnext(node);
+        }
+        else
+        {
+            node->setnext(temp->getnext());
+            temp->setnext(node);
+        }*/
+    }
+    
+    
+    void AMB(int before, int tobe)
+    {
+        Node *node=new Node(tobe);
+        Node *temp=head;
+        Node *prev=head;
+          if(head==NULL)
+           {
+            return ;
+           }
+      else if(head->getdata()==before)
+          {
+            
+            node->setNext(head);
+             head=node;
+            
+          }
+        else 
+        {
+        while(temp!=NULL && temp->getdata()!=before)
+        {
+            prev=temp;
+            temp=temp->getNext();
+            
+        }
+       node->setNext(prev->getNext());
+       prev->setNext(node);
+       }    
+    }
+    
+    void DN(int tobe)
+     { 
+        Node *temp=head;
+        if(head==NULL){
+            return ;
+        }
+        else if(temp->getdata()==tobe){
+           head=temp->getNext();
+        }
+        else {
+        while(temp!=NULL && temp->getNext()->getdata()!=tobe)
+        {
+            temp=temp->getNext();
+            if(temp->getNext()==NULL){
+                return ;
+            }
+        }
+    }
+       temp->setNext(temp->getNext()->getNext());
+    }
+    
+    
+    void DNA(int after)
+    {
+        Node *temp=head;
+       // Node *next=head;
+        if(head==NULL){
+            return ;
+        }
+        else {
+        while(temp!=NULL && temp->getdata()!=after)
+        {
+            temp=temp->getNext();
+           // next=temp->getNext();
+           if(temp->getNext()==NULL){
+               return ;
+           }
+        }
+      temp->setNext(temp->getNext()->getNext());  
+    }
+    
+}
+    
+    void DNB(int before)
+    {
+        Node *temp=head;
+        if(head==NULL){
+            return ;
+        }
+        else if(head->getdata()==before){
+            return ;
+        }
+        else if(head->getNext()->getdata()==before){
+            head=temp->getNext();
+           delete temp;
+        }
+        else {
+        while(temp!=NULL && temp->getNext()->getNext()->getdata()!=before)
+        {
+            temp=temp->getNext();
+        }
+            temp->setNext(temp->getNext()->getNext());
+        }
+    }
+    
+    
+    void FPR()
+    {
+        Node *temp=head;
+        while(temp->getNext()!=NULL)
+        {
+            cout<getdata()<<"->";
+            temp=temp->getNext();
+        }
+        cout<getdata();
+        cout<getNext());
+            cout<getdata()<<" ";
+        }
+    }
+    int RPR(){
+        RPRi(head);
+        cout<getdata()<<" ";
+            temp=temp->getNext();
+        }
+        cout<>s;
+             if(s=="EXIT")
+             {
+                break;
+             }
+             if(s=="AE")
+             {
+                 cin>>a;
+                  ll.AE(a);
+             }      
+             if(s=="AB")
+             {
+                 cin>>a;
+                 ll.AB(a);
+             }
+             if(s=="AMA")
+             {
+                 cin>>a>>b;
+                 ll.AMA(a,b);
+             }
+             if(s=="AMB")
+             {
+                 cin>>a>>b;
+                 ll.AMB(a,b);
+             }
+             if(s=="DN")
+             { 
+                 cin>>a;
+                 ll.DN(a);
+             }
+             if(s=="DNA")
+             {
+                 cin>>a;
+                 ll.DNA(a);
+             }
+             
+             if(s=="DNB")
+             {
+                 cin>>a;
+                 ll.DNB(a);
+             }
+             if(s=="PR")
+             {
+             ll.PR();
+             }
+             if(s=="FPR")
+             {
+                 ll.FPR();
+             }
+             if(s=="RPR")
+             {
+                 ll.RPR();
+             }
+             
+  }
+ return 0;
+}

@@ -1,0 +1,181 @@
+# include <iostream>
+using namespace std;
+
+class Stack
+{
+    public:
+            int size;
+            int top;
+            int *store;
+            
+            Stack()
+            {
+                size = 0;
+                top = -1;
+                store = new int[size];
+            }
+    
+            Stack(int size)
+            {
+                this->size = size;
+                top = -1;
+                store  = new int[size];
+            }
+            
+            ~Stack()
+            {
+                delete[] store;
+            }
+            
+            int isFull()
+            {
+                if(top >= (size-1))
+                {
+                   // cout<<"Stack Full."<<endl;
+                   return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            
+            void Push(char Data)
+            {
+                if(!isFull())
+                {
+                    top++;
+                    store[top] = Data; 
+                }
+            }
+            
+            int isEmpty()
+            {
+                if(top <= -1)
+                {
+                   // cout<<"Stack Empty."<<endl;
+                   return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            
+            char Pop()
+            {
+                char data;
+                if(!isEmpty())
+                {
+                     data = store[top];
+                     top--;
+                     return data;
+                }
+            }
+};
+
+int main()
+{
+    string str1;
+    int size;
+    int flag;
+    cin>>size;
+    
+    for(int i=0;i<size;i++)
+    {
+        cin>>str1;
+        flag = 0;
+        
+        Stack stk1(str1.length());
+        Stack stk2(str1.length());
+        Stack stk3(str1.length());
+        
+        int pushcount = 0;
+        int popcount = 0;
+        int pushcount1 = 0;
+        int popcount1 = 0;
+        
+        for(int j=0;j<str1.length();j++)
+        {
+            if(str1[j] == '{' || str1[j] == '[' || str1[j] == '(' )
+            {
+                pushcount++;
+                stk1.Push(str1[j]);
+            }
+            else if(stk1.isEmpty())
+            {
+                flag = 1;
+                break;
+            }
+            else if(str1[j] == '}')
+            {
+                char ch = stk1.Pop();
+                 popcount++;
+                if(ch != '{')
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            else if(str1[j] == ']')
+            {
+                char ch = stk1.Pop();
+                 popcount++;
+                if(ch != '[')
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            else if(str1[j] == ')')
+            {
+                char ch = stk1.Pop();
+                popcount++;
+                if(ch != '(')
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+        }
+        
+        for(int k=0;k<str1.length();k++)
+        {
+            if(str1[k] == '{' || str1[k] == '[' || str1[k] == '(' )
+            {
+                pushcount1++;
+                stk2.Push(str1[k]);
+            }
+            if(str1[k] == '}' || str1[k] == ']' || str1[k] == ')' )
+            {
+                popcount1++;
+                stk3.Push(str1[k]);
+            }
+        }
+        
+   //     cout<<pushcount1<<endl;
+    //    cout<<popcount1<<endl;
+        
+        if(pushcount1 == popcount1)
+        {
+            if(flag == 0  && stk1.isEmpty())
+            {
+                cout<<"VALID"<<endl;
+            }
+            else if(flag == 1)
+            {   
+                cout<<"MISSMATCH"<<endl;
+            }
+        }
+        else if(pushcount1 > popcount1)
+        {
+            cout<<"TOO MANY OPENING"<<endl;
+        }
+        else 
+        {
+            cout<<"TOO MANY CLOSING"<<endl;
+        }
+    
+    }
+        return 0;
+    }

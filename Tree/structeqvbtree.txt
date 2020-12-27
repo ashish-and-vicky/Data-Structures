@@ -1,0 +1,136 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+    int data;
+    Node* left;
+    Node* right;
+    friend class Btree;
+};
+class Btree
+{
+    Node* root;
+    public:
+    Btree()
+    {
+        root = NULL;
+    }
+    Node* getroot()
+    {
+        return root;
+    }
+    
+    void insert(int data)
+    {
+        Node* newnode = new Node;
+        newnode->data = data;
+        newnode->left = NULL;
+        newnode->right = NULL;
+        if(root == NULL)
+            root = newnode;
+        else
+        {
+            Node *temp1,*temp2;
+            temp1 = temp2 = root;
+            while(temp1 != NULL)
+            {
+                temp2= temp1;
+                if(temp1->data >= data)
+                    temp1 = temp1->left;
+                else if(temp1->data < data)
+                    temp1 = temp1->right;
+               // else
+                 //   break;
+            }
+                if(temp2->data >= data)
+                    temp2->left = newnode;
+                else if(temp2->data < data)
+                    temp2->right = newnode;
+                //else
+                  //  return;
+        }
+    }
+    
+    int compare(Node *p1,Node *p2)
+    {
+        if(p1 == NULL && p2 == NULL)
+        {
+            return 1;
+        }
+        if( p1 != NULL && p2 != NULL)
+        {
+            if(compare(p1->left,p2->left) && compare(p1->right,p2->right))
+                return 1;
+        }                
+        else
+        {
+            return 0;
+        }
+    }
+    
+    int depth(Node *temp)
+    {
+        int h;
+        if(temp == NULL)
+            return 0;
+        int l = depth(temp->left);
+        int r = depth(temp->right);
+        
+        if( l > r )
+            h = l + 1;
+        else
+            h = r + 1;
+        
+        return h;
+    }
+    
+};
+int main()
+{
+    int e;
+    cin >> e;
+    Btree B1;
+    
+    int i ;
+    
+   while(1)
+    {
+        cin >> i;
+        if(i == -1)
+            break;
+        else
+            B1.insert(i);
+            
+    }
+    for(int j = 0 ; j < e-1 ; j++)
+    {    
+        Btree B2;
+        while(1)
+        {
+            cin >> i;
+            if(i == -1)
+                break;
+            else
+                B2.insert(i);          
+        }
+        
+        int d1,d2,dp;
+        d1 = B1.depth(B1.getroot());
+        d2 = B2.depth(B2.getroot());
+        
+        if( d1 > d2 )
+            dp = d1 - d2;
+        else
+            dp = d2 - d1;
+            
+    //    cout << d1<<" " << d2 << " "<< dp   << endl;
+        int c = B1.compare(B1.getroot(),B2.getroot());
+      // cout << c;
+       if( c == 1)
+            cout << "YES" << " " << dp << endl;
+        else if(c == 0)
+            cout << "NO" << " " << dp << endl;
+    
+    }   
+    return 0;
+}
